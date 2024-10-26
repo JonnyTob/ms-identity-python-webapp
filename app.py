@@ -12,7 +12,7 @@ import app_config
 # AUTHORITY=https://login.microsoftonline.com/a9e120e5-0e5a-43fc-89c1-2e87e9dc90d2
 # The following variables are required for the app to run.
 # CLIENT_ID=1950eb6f-5995-41ec-b16b-ab22e8eeced4
-# CLIENT=MK68Q~vJ6vsuJd3fQx6h9OiZllfWMYfo2.ggobaq
+# Us2OFF+dko2dnN1SmQzZlF4Nmg5T2labGxmV01ZZm8yLmdnb2JhcQ (B64)
 
 # Your project's redirect URI that you registered in Azure Portal.
 # For example: http://localhost:5000/redirect
