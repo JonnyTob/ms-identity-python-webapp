@@ -9,6 +9,14 @@ import app_config
 # Identities --> https://entra.microsoft.com/
 # GryTelokk@padel4ever.onmicrosoft.com (Hemmelig****2019)
 # JonnyTobiassen@padel4ever.onmicrosoft.com (Hemme****2019)
+# AUTHORITY=https://login.microsoftonline.com/a9e120e5-0e5a-43fc-89c1-2e87e9dc90d2
+# The following variables are required for the app to run.
+# CLIENT_ID=1950eb6f-5995-41ec-b16b-ab22e8eeced4
+# CLIENT=MK68Q~vJ6vsuJd3fQx6h9OiZllfWMYfo2.ggobaq
+
+# Your project's redirect URI that you registered in Azure Portal.
+# For example: http://localhost:5000/redirect
+# REDIRECT_URI=http://localhost:5000/getAToken
 
 
 __version__ = "0.9.0"  # The version of this sample, for troubleshooting purpose
