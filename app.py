@@ -3,6 +3,13 @@ import requests
 from flask import Flask, render_template
 from identity.flask import Auth
 import app_config
+#
+# Run With flask run -h localhost
+#
+# Identities --> https://entra.microsoft.com/
+# GryTelokk@padel4ever.onmicrosoft.com (Hemmelig****2019)
+# JonnyTobiassen@padel4ever.onmicrosoft.com (Hemme****2019)
+
 
 __version__ = "0.9.0"  # The version of this sample, for troubleshooting purpose
 
@@ -22,14 +29,24 @@ auth = Auth(
 )
 
 @app.route("/")
-@auth.login_required
+@auth.login_required(scopes=["User.Read","Group.Read.All"])
 def index(*, context):
+    #print("Access Token")
+    #print(context['access_token'])
+    groups = get_user_groups(context['access_token'])
+    print(groups)
+    print(type(groups))
+    upn = context['user'].get('preferred_username')
+    print(upn)
+    #print(context['user'])
     return render_template(
         'index.html',
         user=context['user'],
+        upn=upn,
+        groups=groups,
         edit_profile_url=auth.get_edit_profile_url(),
         api_endpoint=os.getenv("ENDPOINT"),
-        title=f"Flask Web App Sample v{__version__}",
+        title=f"Azure Entra AD Authentication POC",
     )
 
 @app.route("/call_api")
@@ -42,3 +59,20 @@ def call_downstream_api(*, context):
     ).json() if context.get('access_token') else "Did you forget to set the SCOPE environment variable?"
     return render_template('display.html', title="API Response", result=api_result)
 
+# Function to get the user's group membership using Microsoft Graph API
+def get_user_groups(access_token):
+    graph_api_url = "https://graph.microsoft.com/v1.0/me/memberOf"
+    headers = {
+        'Authorization': f'Bearer {access_token}'
+    }
+    response = requests.get(graph_api_url, headers=headers)
+
+    if response.status_code == 200:
+        # Extract group IDs from the response
+        groups = response.json().get('value', [])
+        group_data = [(group['id'], group['displayName']) for group in groups if 'id' in group and 'displayName' in group]
+        #group_ids = [group['id'] for group in groups if 'id' in group]
+        return group_data
+    else:
+        print(f"Error fetching groups: {response.status_code}, {response.text}")
+        return []

@@ -6,12 +6,16 @@
 </head>
 <body>
     <h1>{{ title }}</h1>
-    <h2>Welcome {{ user.get("name") }}!</h2>
+    <h2>Welcome {{ user.get("name") }} - ({{ upn }})</h2>
+    <h2>You are member of the following Groups</h2>
+    <pre>{{ groups | safe }}</pre>
 
     <!-- There is much hassle to get the local static image to show up on App Service.
     https://learn.microsoft.com/en-us/azure/app-service/configure-language-python#serve-static-files-for-django-apps
     For now, we will use a remote image.
     -->
+    <p></p>
+    <h2>Flow:</h2>
     <img src="https://github.com/Azure-Samples/ms-identity-python-webapp-django/raw/main/static/topology.png" alt="Topology">
 
     <ul>
