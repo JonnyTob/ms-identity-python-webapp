@@ -15,6 +15,14 @@
     For now, we will use a remote image.
     -->
     <p></p>
+    <h3>Group specific content: {{ is_member_of_group }}</h3>
+    <p>
+      {% if is_member_of_group %}
+      <h2>Exclusive Group Content</h2>
+      <p> U only see this text since U are member of correct group</p>
+      <!-- Add more group-exclusive content here -->
+      {% endif %}
+    </p>
     <h2>Flow:</h2>
     <img src="https://github.com/Azure-Samples/ms-identity-python-webapp-django/raw/main/static/topology.png" alt="Topology">
 

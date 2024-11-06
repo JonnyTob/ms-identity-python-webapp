@@ -37,12 +37,17 @@ auth = Auth(
     #b2c_reset_password_user_flow=os.getenv('RESETPASSWORD_USER_FLOW'),
 )
 
+target_group = "ca5ff78f-8dce-4625-84ef-dc9ade328e60"
+
 @app.route("/")
 @auth.login_required(scopes=["User.Read","Group.Read.All"])
 def index(*, context):
     #print("Access Token")
     #print(context['access_token'])
     groups = get_user_groups(context['access_token'])
+    # is_member = target_group in groups
+    is_member = any(group[0] == target_group for group in groups)
+
     print(groups)
     print(type(groups))
     upn = context['user'].get('preferred_username')
@@ -56,6 +61,7 @@ def index(*, context):
         edit_profile_url=auth.get_edit_profile_url(),
         api_endpoint=os.getenv("ENDPOINT"),
         title=f"Azure Entra AD Authentication POC",
+        is_member_of_group = is_member
     )
 
 @app.route("/call_api")
